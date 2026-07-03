@@ -1,5 +1,7 @@
 # Emby Proxy Light Deploy
 
+[中文文档](README.zh-CN.md)
+
 Lightweight deployment notes and scripts for running
 [Gsy-allen/emby-reverse-proxy-go](https://github.com/Gsy-allen/emby-reverse-proxy-go)
 behind Nginx with HTTPS.
