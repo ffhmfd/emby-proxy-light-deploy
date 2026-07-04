@@ -129,6 +129,7 @@ User=emby-proxy
 Group=emby-proxy
 Environment=LISTEN_ADDR=127.0.0.1:8080
 Environment=BLOCK_PRIVATE_TARGETS=true
+Environment=GODEBUG=http2client=0
 ExecStart=/usr/local/bin/emby-proxy
 Restart=on-failure
 RestartSec=3
@@ -188,7 +189,7 @@ server {
     send_timeout 3600s;
 
     location = / {
-        return 302 ${UPSTREAM_PREFIX};
+        return 404;
     }
 
     location / {
@@ -230,6 +231,7 @@ verify_deploy() {
   curl -fsS http://127.0.0.1:8080/health
   printf '\n'
   curl -k -I --connect-timeout 10 --max-time 30 "https://${DOMAIN}/health" | sed -n '1,12p'
+  curl -k -I --connect-timeout 10 --max-time 30 "https://${DOMAIN}/" | sed -n '1,12p'
   curl -k -I --connect-timeout 10 --max-time 30 "https://${DOMAIN}${UPSTREAM_PREFIX}" | sed -n '1,20p'
 }
 

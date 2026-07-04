@@ -14,6 +14,7 @@ This repository documents a minimal VPS deployment:
 - `emby-proxy` runs as a `systemd` service on `127.0.0.1:8080`
 - Nginx terminates HTTPS and forwards requests to the local service
 - Certbot obtains and renews the Let's Encrypt certificate
+- the root path can stay unbound and return `404`, while explicit dynamic paths still work
 
 > Only use this for Emby servers where reverse proxying is allowed.
 
@@ -76,13 +77,14 @@ bash scripts/deploy.sh
 After deployment, open:
 
 ```text
-https://emby.example.com/
+https://emby.example.com/https/iris.niceduck.lol/443/
 ```
 
-The root path redirects to:
+The root path returns `404` by default. This keeps the proxy from binding one
+default upstream:
 
 ```text
-https://emby.example.com/https/iris.niceduck.lol/443/
+https://emby.example.com/
 ```
 
 Health check:
@@ -104,6 +106,9 @@ ok
 - `scripts/deploy.sh`: one-shot deployment script for Debian-style VPS hosts
 - `examples/emby-proxy.service`: systemd service template
 - `examples/nginx-emby-proxy.conf`: Nginx HTTPS reverse proxy template
+- `examples/nginx-fixed-emby-upstream.conf`: Nginx location template for a fixed high-speed upstream
+- `docs/fixed-upstream-operations.md`: operational notes for adding future fixed Emby upstreams
+- `docs/fixed-upstream-operations.zh-CN.md`: operations notes for adding future fixed Emby upstreams
 
 ## Operations
 

@@ -9,6 +9,7 @@ User=emby-proxy
 Group=emby-proxy
 Environment=LISTEN_ADDR=127.0.0.1:8080
 Environment=BLOCK_PRIVATE_TARGETS=true
+Environment=GODEBUG=http2client=0
 ExecStart=/usr/local/bin/emby-proxy
 Restart=on-failure
 RestartSec=3
